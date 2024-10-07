@@ -33,4 +33,5 @@ This project is a simple terminal-based Pong game implemented in C++ for Linux s
 ### Installation of g++ on Fedora:
 To install g++ (C++ compiler) on Fedora, use the following command:
 ```bash
-sudo dnf install gcc-c++
+/  sudo dnf install gcc-c++ /   (in fedora)
+/  sudo apt-get install gcc-c++  /  (in ubuntu)
