@@ -1,4 +1,4 @@
-# Pong Game in C++
+# Pong Game in Html, Css and Js
 
 This project is a simple terminal-based Pong game implemented in C++ for Linux systems. The game allows two players to control paddles and play table tennis (pong) against each other.
 
@@ -10,28 +10,9 @@ This project is a simple terminal-based Pong game implemented in C++ for Linux s
 - The first player to miss the ball gives the opponent a point
 - The game continues until Player 1 or Player 2 decides to quit
 
-## Controls
+## How to Play
 
-### Player 1:
-- **Move up**: `W`
-- **Move down**: `S`
-
-### Player 2:
-- **Move up**: `I`
-- **Move down**: `K`
-
-### Quit Game:
-- Press `Q` to quit the game.
-
-## How to Compile and Run
-
-### Prerequisites
-
-- Linux-based system (e.g., Fedora, Ubuntu)
-- g++ compiler
-
-### Installation of g++ on Fedora:
-To install g++ (C++ compiler) on Fedora, use the following command:
-```bash
-/  sudo dnf install gcc-c++ /   (in fedora)
-/  sudo apt-get install gcc-c++  /  (in ubuntu)
+1. Just open index.html in your browser
+2. Use the arrow keys on your keyboard to control the paddles
+3. The first player to miss the ball gives the opponent a point
+4. The game continues until Player 1 or Player 2 decides to quit.
