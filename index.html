@@ -61,18 +61,23 @@
       const rect = canvas.getBoundingClientRect();
       const y = e.clientY - rect.top;
       playerY = y - PADDLE_HEIGHT / 2;
-      // Clamp
       playerY = Math.max(0, Math.min(canvas.height - PADDLE_HEIGHT, playerY));
     });
 
     function drawNet() {
+      if (!ctx || !canvas) {
+        throw new Error("Canvas or context is null");
+      }
       ctx.fillStyle = "#ccc";
-      for(let y = 0; y < canvas.height; y += 24 + 18) {
+      for (let y = 0; y < canvas.height; y += 24 + 18) {
         ctx.fillRect(canvas.width/2 - 2, y, 4, 24);
       }
     }
 
     function draw() {
+      if (!ctx || !canvas) {
+        throw new Error("Canvas or context is null");
+      }
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       drawNet();
 
@@ -88,13 +93,20 @@
     }
 
     function resetBall(scoredBy) {
-      ballX = canvas.width/2;
-      ballY = canvas.height/2;
+      if (!canvas || !ctx) {
+        throw new Error("Canvas or context is null");
+      }
+      ballX = canvas.width / 2;
+      ballY = canvas.height / 2;
       ballSpeedX = (scoredBy === "player" ? 1 : -1) * 3;
       ballSpeedY = (Math.random() > 0.5 ? 1 : -1) * 2;
     }
 
     function update() {
+      if (!canvas || !ctx || typeof ballX === 'undefined' || typeof ballY === 'undefined') {
+        throw new Error("Canvas, context, or ball position is undefined");
+      }
+
       ballX += ballSpeedX;
       ballY += ballSpeedY;
 
@@ -116,7 +128,7 @@
       ) {
         ballX = PLAYER_X + PADDLE_WIDTH + BALL_RADIUS;
         ballSpeedX *= -1;
-        let deltaY = ballY - (playerY + PADDLE_HEIGHT / 2);
+        const deltaY = ballY - (playerY + PADDLE_HEIGHT / 2);
         ballSpeedY = deltaY * 0.18;
       }
 
@@ -129,7 +141,7 @@
       ) {
         ballX = AI_X - BALL_RADIUS;
         ballSpeedX *= -1;
-        let deltaY = ballY - (aiY + PADDLE_HEIGHT / 2);
+        const deltaY = ballY - (aiY + PADDLE_HEIGHT / 2);
         ballSpeedY = deltaY * 0.18;
       }
 
@@ -155,20 +167,54 @@
     }
 
     function updateScoreboard() {
-      scoreboard.textContent = playerScore + " : " + aiScore;
+      if (!scoreboard) {
+        throw new Error("Scoreboard is null");
+      }
+      try {
+        scoreboard.textContent = playerScore + " : " + aiScore;
+      } catch (error) {
+        if (error instanceof TypeError) {
+          console.error("TypeError: ", error.message);
+        } else if (error instanceof ReferenceError) {
+          console.error("ReferenceError: ", error.message);
+        } else {
+          console.error("Error: ", error.message);
+        }
+      }
     }
 
     function gameLoop() {
-      update();
-      draw();
-      requestAnimationFrame(gameLoop);
+      try {
+        update();
+        draw();
+        requestAnimationFrame(gameLoop);
+      } catch (error) {
+        if (error instanceof TypeError) {
+          console.error("TypeError: ", error.message);
+        } else if (error instanceof ReferenceError) {
+          console.error("ReferenceError: ", error.message);
+        } else {
+          console.error("Error: ", error.message);
+        }
+      }
     }
 
     function init() {
+      if (!canvas || !ctx || !scoreboard) {
+        throw new Error("Canvas, context, or scoreboard is null");
+      }
+
       playerScore = 0;
       aiScore = 0;
+
+      if (typeof scoreboard.textContent === 'undefined') {
+        throw new Error("Scoreboard textContent is undefined");
+      }
+
       updateScoreboard();
+
       resetBall("player");
+
       gameLoop();
     }
 
